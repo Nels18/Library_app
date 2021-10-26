@@ -13,9 +13,25 @@
         <h1>Ma bibliothèque</h1>
     </header>
     <main>
-        <?php 
-        echo 'hello';
-        ?>
+        <table>
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Catégorie</th>
+                <th>Date de parution</th>
+                <th>Résumé</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php 
+            require_once 'read.php';
+            ?>
+            <?php
+                read();
+            ?>
+        </tbody>
+    </table>
     </main>
 </body>
 </html>
