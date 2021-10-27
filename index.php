@@ -18,20 +18,19 @@
             <tr>
                 <th>Titre</th>
                 <th>Auteur</th>
-                <th>Catégorie</th>
+                <th>Genre</th>
                 <th>Date de parution</th>
                 <th>Résumé</th>
             </tr>
         </thead>
         <tbody>
             <?php 
-            require_once 'read.php';
-            ?>
-            <?php
+                require_once 'read.php';
                 read();
             ?>
         </tbody>
     </table>
+    <a href="add_book.php"><button>Ajouter un livre</button></a>
     </main>
 </body>
 </html>
