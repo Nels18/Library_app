@@ -1,5 +1,23 @@
 <?php 
     require_once 'read.php';
+
+    // Run request
+
+    if (isset($_GET['search_submit'])) {
+        $search = addslashes(str_replace(' ', '%', trim($_GET['search'])));
+
+        $searchResult = "SELECT b.id, b.title, a.firstname, a.lastname, c.name category, b.publication_date, b.summary  FROM book b
+        INNER JOIN author a ON a.id = b.author_id
+        INNER JOIN category c ON c.id = b.category_id
+        WHERE b.title LIKE '%$search%'
+        ORDER BY id";
+    } else {
+        $allBooks = "SELECT b.id, b.title, a.firstname, a.lastname, c.name category, b.publication_date, b.summary  FROM book b
+        INNER JOIN author a ON a.id = b.author_id
+        INNER JOIN category c ON c.id = b.category_id
+        ORDER BY id
+        ;";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +35,23 @@
         <h1>Ma bibliothèque</h1>
     </header>
     <main>
+        <form action="index.php" method="get">
+            <label for="search">Recherche : </label>
+            <input type="search" name="search" id="search">
+            <input type="submit" name="search_submit" value="Rechercher">
+        </form>
+        <?php
+            if (isset($_GET['search_submit']) && '' !== $_GET['search']) {
+            echo '<div>
+                <p> Résultat pour : '
+                    . str_replace('%', ' ', $search) . 
+                '</p>
+                <p>
+                    <a href="index.php"><button>Afficher tous les livres</button></a>
+                </p>
+            </div>';
+            }
+        ?>
         <table class='book_table'>
         <thead>
             <tr>
@@ -31,8 +66,12 @@
             </tr>
         </thead>
         <tbody>
-            <?php 
-                read();
+            <?php
+                if (isset($_GET['search_submit']) && 'Rechercher' == $_GET['search_submit']) {
+                    read($searchResult);
+                } else {
+                    read($allBooks);
+                }
             ?>
         </tbody>
     </table>

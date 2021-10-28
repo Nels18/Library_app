@@ -1,15 +1,11 @@
 <?php
 
-function read()
+function read($query)
 {
     require_once 'db_connection.php';
     
     // Run request
-    $query = "SELECT b.id, b.title, a.firstname, a.lastname, c.name category, b.publication_date, b.summary  FROM book b
-    INNER JOIN author a ON a.id = b.author_id
-    INNER JOIN category c ON c.id = b.category_id
-    ORDER BY id
-    ;";
+
     $data = mysqli_query($mysqli, $query
     );
 
@@ -25,7 +21,7 @@ function read()
             <td>' . $book["title"] . '</td>
             <td>' . $book["firstname"]. ' ' . $book["lastname"] . '</td>
             <td>' . $book["category"] . '</td>
-            <td>' . $book["publication_date"] . '</td>
+            <td>' . date_format(date_create($book["publication_date"]), 'd-m-Y') . '</td>
             <td>' . $book["summary"] . '</td>
             <td>
                 <a href="edit_book.php?id=' . $book["id"] . '">

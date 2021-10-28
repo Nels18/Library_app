@@ -6,9 +6,9 @@ var_dump($_POST);
 if (isset($_POST['submit'])) {
     $author_id = intval($_POST['author_id']);
     $category_id = intval($_POST['category_id']);
-    $title = addslashes($_POST['title']);
+    $title = addslashes(htmlspecialchars($_POST['title']));
     $publication_date = $_POST['publication_date'];
-    $summary = addslashes($_POST['summary']);
+    $summary = addslashes(htmlspecialchars($_POST['summary']));
     
     // Run request
     $query = "INSERT INTO book (author_id, category_id, title, publication_date, summary) VALUES ($author_id, $category_id, '$title', '$publication_date', '$summary');";

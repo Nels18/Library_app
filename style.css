@@ -8,14 +8,15 @@
 body {
     height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
+    padding: 50px;
 }
 
 .book_table {
     border-collapse: collapse;
     width: auto;
     min-width: 500px;
+    margin: 50px 0;
     box-shadow: 0 5px 50px rgba(0, 0, 0, .15);
-    margin: 50px;
     border: 2px solid darkblue;
 }
 
@@ -35,4 +36,9 @@ tbody, td, th, tr {
 
 tbody tr:nth-child(even) {
     background-color: #eee;
+}
+
+.book_table button{
+    display: block;
+    margin: 0 auto;
 }
