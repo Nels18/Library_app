@@ -17,7 +17,7 @@
         <h1>Ma bibliothèque</h1>
     </header>
     <main>
-        <table>
+        <table class='book_table'>
         <thead>
             <tr>
                 <th>Id</th>
