@@ -1,4 +1,5 @@
 <?php
+
     function listAuthor($mysqli)
     {
         $query = "SELECT a.id, a.firstname, a.lastname FROM author a;";

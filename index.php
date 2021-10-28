@@ -16,11 +16,13 @@
         <table>
         <thead>
             <tr>
+                <th>Id</th>
                 <th>Titre</th>
                 <th>Auteur</th>
                 <th>Genre</th>
                 <th>Date de parution</th>
                 <th>Résumé</th>
+                <th>Modifier</th>
             </tr>
         </thead>
         <tbody>
