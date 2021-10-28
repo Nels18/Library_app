@@ -1,7 +1,11 @@
 <?php
     require 'db_connection.php';
-    require 'lists_options_selects.php';
     require 'create.php';
+    $queryAuthor = "SELECT a.id, a.firstname, a.lastname FROM author a;";
+    $resultAuthor = mysqli_query($mysqli, $queryAuthor);
+    $queryCategory = "SELECT c.id, c.name category FROM category c;";
+    $resultCategory = mysqli_query($mysqli, $queryCategory);
+
 ?>
 <!DOCTYPE html>
 <html lang='fr'>
@@ -29,7 +33,12 @@
                 <select name="author_id" id="author" required>
                     <option value="null">Sélectionner un auteur</option>
                     <?php
-                        echo listAuthor($mysqli);
+                        while ($author = mysqli_fetch_assoc($resultAuthor)) {
+                            echo '<option value="'
+                            . $author["id"] .
+                            '">' . $author["firstname"] . ' ' . $author["lastname"] .
+                            '</option>';
+                        }
                     ?>
                 </select>
             </div>
@@ -39,7 +48,11 @@
                 <select name="category_id" id="category" required>
                     <option value="null">Sélectionner un genre</option>
                     <?php
-                        echo listCategory($mysqli);
+                        while ($category = mysqli_fetch_assoc($resultCategory)) {
+                            echo '<option value="'
+                            . $category["id"] . '">' . $category["category"] .
+                            '</option>';
+                        }
                     ?>
                 </select>
             </div>
@@ -50,11 +63,12 @@
             </div>
 
             <div>
-                <label for="summary"></label>
-                <textarea name="summary" id="summary" cols="30" rows="10"></textarea>
+                <label for="summary">Résumé :</label>
+                <textarea name="summary" id="summary" cols="80" rows="10"></textarea>
             </div>
             
             <input type="submit" name="submit" value="Ajouter le livre">
+            <a href="index.php"><button>Annuler</button></a>
         </form>    
     </main>
 </body>
