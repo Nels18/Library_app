@@ -1,10 +1,10 @@
 <?php
     require 'db_connection.php';
     require 'update.php';
-    $queryAuthor = "SELECT a.id, a.firstname, a.lastname FROM author a;";
-    $resultAuthor = mysqli_query($mysqli, $queryAuthor);
-    $queryCategory = "SELECT c.id, c.name category FROM category c;";
-    $resultCategory = mysqli_query($mysqli, $queryCategory);
+    $queryAuthors = "SELECT a.id, a.firstname, a.lastname FROM author a;";
+    $authors = mysqli_query($mysqli, $queryAuthors);
+    $queryCategories = "SELECT c.id, c.name category FROM category c;";
+    $categories = mysqli_query($mysqli, $queryCategories);
 
     // Get book's id
     $bookId = $_GET['id'];
@@ -23,7 +23,6 @@
 
     if ($num_books == 1) {
         $book = mysqli_fetch_assoc($result);
-        var_dump($book);
     }
 
     
@@ -53,7 +52,7 @@
                 <label for="author">Auteur :</label>
                 <select name="author_id" id="author" required>
                     <?php
-                        while ($author = mysqli_fetch_assoc($resultAuthor)) {
+                        while ($author = mysqli_fetch_assoc($authors)) {
                             echo ($author["id"] == $book['author_id'])
 
                             ?'<option value="' . $author["id"] . '"' . 'selected' . '>' . $author["firstname"] . ' ' . $author["lastname"] . '</option>'
@@ -68,7 +67,7 @@
                 <label for="category">Genre :</label>
                 <select name="category_id" id="category" required>
                     <?php
-                        while ($category = mysqli_fetch_assoc($resultCategory)) {
+                        while ($category = mysqli_fetch_assoc($categories)) {
                             echo ($category["id"] == $book['category_id'])
 
                             ?'<option value="' . $category["id"] . '"' . 'selected' . '>' . $category["category"] . '</option>'
@@ -80,8 +79,8 @@
             </div>
 
             <div>
-                <label for="publication_date" required>Date de parution :</label>
-                <input type="date" name="publication_date" id="publication_date" value= <?= $book['publication_date'] ;?> >
+                <label for="publication_date">Date de parution :</label>
+                <input type="date" name="publication_date" id="publication_date" value= <?= $book['publication_date'] ;?> required>
             </div>
 
             <div>
@@ -91,8 +90,8 @@
             
             <input type="hidden" name="book_id" value= <?= $bookId ;?> >
             <input type="submit" name="submit" value="Modifier le livre">
-            <a href="update.php"><button>Annuler</button></a>
         </form>    
+        <a href="index.php"><button>Annuler la modification</button></a>
     </main>
 </body>
 </html>

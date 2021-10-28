@@ -1,3 +1,7 @@
+<?php 
+    require_once 'read.php';
+?>
+
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
@@ -23,11 +27,11 @@
                 <th>Date de parution</th>
                 <th>Résumé</th>
                 <th>Modifier</th>
+                <th>Supprimer</th>
             </tr>
         </thead>
         <tbody>
             <?php 
-                require_once 'read.php';
                 read();
             ?>
         </tbody>

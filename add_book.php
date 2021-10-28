@@ -1,10 +1,10 @@
 <?php
     require 'db_connection.php';
     require 'create.php';
-    $queryAuthor = "SELECT a.id, a.firstname, a.lastname FROM author a;";
-    $resultAuthor = mysqli_query($mysqli, $queryAuthor);
-    $queryCategory = "SELECT c.id, c.name category FROM category c;";
-    $resultCategory = mysqli_query($mysqli, $queryCategory);
+    $queryAuthors = "SELECT a.id, a.firstname, a.lastname FROM author a;";
+    $authors = mysqli_query($mysqli, $queryAuthors);
+    $queryCategories = "SELECT c.id, c.name category FROM category c;";
+    $categories = mysqli_query($mysqli, $queryCategories);
 
 ?>
 <!DOCTYPE html>
@@ -33,7 +33,7 @@
                 <select name="author_id" id="author" required>
                     <option value="null">Sélectionner un auteur</option>
                     <?php
-                        while ($author = mysqli_fetch_assoc($resultAuthor)) {
+                        while ($author = mysqli_fetch_assoc($authors)) {
                             echo '<option value="'
                             . $author["id"] .
                             '">' . $author["firstname"] . ' ' . $author["lastname"] .
@@ -48,7 +48,7 @@
                 <select name="category_id" id="category" required>
                     <option value="null">Sélectionner un genre</option>
                     <?php
-                        while ($category = mysqli_fetch_assoc($resultCategory)) {
+                        while ($category = mysqli_fetch_assoc($categories)) {
                             echo '<option value="'
                             . $category["id"] . '">' . $category["category"] .
                             '</option>';
@@ -58,8 +58,8 @@
             </div>
 
             <div>
-                <label for="publication_date" required>Date de parution</label>
-                <input type="date" name="publication_date" id="publication_date">
+                <label for="publication_date">Date de parution</label>
+                <input type="date" name="publication_date" id="publication_date" required>
             </div>
 
             <div>
@@ -68,8 +68,8 @@
             </div>
             
             <input type="submit" name="submit" value="Ajouter le livre">
-            <a href="index.php"><button>Annuler</button></a>
         </form>    
+        <a href="index.php"><button>Annuler l'ajout</button></a>
     </main>
 </body>
 </html>
