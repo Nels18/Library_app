@@ -1,7 +1,6 @@
 <?php
 require 'db_connection.php';
 
-var_dump($_POST);
 // If form is being submitted, get the values from $_POST array
 if (isset($_POST['submit'])) {
     $author_id = intval($_POST['author_id']);

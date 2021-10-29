@@ -22,7 +22,7 @@
         <h1>Ajouter un livre</h1>
     </header>
     <main>
-        <form action="create.php" method="post">
+        <form action="create.php" method="post" class="form_info">
             <div>
                 <label for="title">Titre</label>
                 <input type="text" name="title" id="title" required>

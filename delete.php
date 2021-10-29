@@ -11,7 +11,6 @@ if(isset($bookId)){
     // Get book's title
     $querySelect = "SELECT * FROM book WHERE id = $bookId;";
     $book = mysqli_fetch_assoc(mysqli_query($mysqli, $querySelect));
-    var_dump($querySelect,$book['title']);
     if (!isset($book)){
         header('location:index.php');
     }
@@ -19,7 +18,6 @@ if(isset($bookId)){
     // Delete book
     $queryDelete = "DELETE FROM book WHERE id = $bookId";
     $deletedBook = mysqli_query($mysqli, $queryDelete);
-    var_dump($deletedBook);
     
     // Feedback
     if($deletedBook){

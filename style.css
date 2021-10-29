@@ -6,9 +6,13 @@
 }
 
 body {
-    height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
     padding: 50px;
+}
+
+h1 {
+    font-size: 4rem;
+    margin: 1rem 0;
 }
 
 .book_table {
@@ -22,12 +26,16 @@ body {
 
 thead tr {
     background-color: darkblue;
-    color: lightblue;
+    color: #fff;
 }
 
 th, td {
     border: 1px solid #333;
     padding: 20px;
+}
+
+.th_summary {
+    max-width: 400px;
 }
 
 tbody, td, th, tr {
@@ -41,4 +49,38 @@ tbody tr:nth-child(even) {
 .book_table button{
     display: block;
     margin: 0 auto;
+}
+button, input, select {
+    padding: 10px;
+    margin: .5em 0;
+}
+
+.form_info div {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+label {
+    padding: 0.5em 0;
+}
+
+.form_info input:not('type=submit'), .form_info select {
+    display: block;
+}
+
+.form_info textarea {
+    margin-bottom: .5em;
+    padding: 10px;
+}
+
+.form_info textarea, .form_info input[type='date'] {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.form_search input[type='search'] {
+    width: 40%;
+}
+.form_search input, .form_search select {
+    margin-right: 20px;
 }

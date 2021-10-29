@@ -1,13 +1,11 @@
 <?php
 
-function read($query)
+function read($mysqli, $query)
 {
-    require_once 'db_connection.php';
     
     // Run request
 
-    $data = mysqli_query($mysqli, $query
-    );
+    $data = mysqli_query($mysqli, $query);
 
     // Fetch result
     while ($book = mysqli_fetch_assoc($data)) {
@@ -17,12 +15,11 @@ function read($query)
         
         $result =
         '<tr>
-            <td>' . $book["id"] . '</td>
             <td>' . $book["title"] . '</td>
             <td>' . $book["firstname"]. ' ' . $book["lastname"] . '</td>
             <td>' . $book["category"] . '</td>
             <td>' . date_format(date_create($book["publication_date"]), 'd-m-Y') . '</td>
-            <td>' . $book["summary"] . '</td>
+            <td class="th_summary">' . $book["summary"] . '</td>
             <td>
                 <a href="edit_book.php?id=' . $book["id"] . '">
                     <button>' . $btnEdit . '</button>

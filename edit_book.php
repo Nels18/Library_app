@@ -11,7 +11,6 @@
 
     // Run request
     $query = "SELECT * FROM book WHERE id = $bookId;";
-
     $result = mysqli_query($mysqli, $query);
 
     // If 
@@ -24,7 +23,6 @@
     if ($num_books == 1) {
         $book = mysqli_fetch_assoc($result);
     }
-
     
 ?>
 <!DOCTYPE html>
@@ -42,10 +40,10 @@
         <h1>Modifier un livre</h1>
     </header>
     <main>
-        <form action="update.php" method="post">
+        <form action="update.php" method="post" class="form_info">
             <div>
                 <label for="title">Titre :</label>
-                <input type="text" name="title" id="title" value= <?= $book['title'] ;?> required>
+                <input type="text" name="title" id="title" value= <?= '"' . $book['title'] . '"' ;?> required>
             </div>
             
             <div>
