@@ -1,4 +1,24 @@
 
+:root {
+    /* Typos */
+    --main-font: "Comfortaa", cursive;
+    --primary-title-font: "Katibeh", cursive;
+
+    /* Colors */
+    --primary-color: rgb(94, 129, 197);
+    --dark-primary-color: rgb(17, 43, 95);
+    --light-primary-color: rgb(133, 162, 220);
+    --secondary-color: rgb(79, 189, 181);
+    --dark-secondary-color: rgb(23, 143, 134);
+    --light-secondary-color: rgb(202, 244, 241);
+    --tertiary-color: rgb(69, 173, 58);
+    --dark-tertiary-color: rgb(37, 52, 36);
+    --light-tertiary-color: rgb(150, 223, 142);
+    --danger: rgb(251, 75, 84);
+    --light: rgb(228, 232, 236);
+    --dark: rgb(28, 31, 37);
+}
+
 *, ::before, ::after {
     box-sizing: border-box;
     margin: 0;
@@ -7,31 +27,53 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    color: var(--dark);
     padding: 50px;
 }
 
-h1 {
-    font-size: 4rem;
+.container {
+    width: 80%;
+    min-width: 270px;
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
     margin: 1rem 0;
+}
+
+h1 {
+    font-size: 3rem;
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: 1.5rem;
 }
 
 .book_table {
     border-collapse: collapse;
-    width: auto;
+    border-radius: 30px;
+    overflow: hidden;
+    width: 100%;
     min-width: 500px;
     margin: 50px 0;
     box-shadow: 0 5px 50px rgba(0, 0, 0, .15);
-    border: 2px solid darkblue;
 }
 
 thead tr {
-    background-color: darkblue;
-    color: #fff;
+    background-color: var(--dark-primary-color);
+    color: var(--light);
 }
 
 th, td {
     border: 1px solid #333;
-    padding: 20px;
+    padding: 40px 20px;
 }
 
 .th_summary {
@@ -45,27 +87,103 @@ tbody, td, th, tr {
 tbody tr:nth-child(even) {
     background-color: #eee;
 }
+.book_table tbody tr:last-of-type {
+    border-bottom: 30px solid var(--dark-primary-color);
+}
 
-.book_table button{
+input,
+label,
+textarea,
+select,
+button  {
+    margin: 0.5em 0;
+    padding: 0.8rem;
+    font-size: 1rem;
+    color: var(--dark);
+}
+
+input,
+textarea,
+select,
+button  {
+    border-radius: 3px;
+    border: 1px solid;
+}
+
+button, input[type='submit'] {
+    cursor: pointer;
+}
+
+.btn_cancel {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn_primary, input[type='submit'] {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--light);
+}
+.btn_danger {
+    border-color: var(--danger);
+    /* background-color: var(--danger); */
+    color: var(--danger);
+}
+
+.btn_edit, .btn_delete, .btn_pagination {
+    width: 60px;
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+.btn_edit, .btn_delete{
     display: block;
     margin: 0 auto;
-}
-button, input, select {
-    padding: 10px;
-    margin: .5em 0;
+    background-color: #f5f5f5;
 }
 
-.form_info div {
+.btn_edit {
+    border-color: var(--primary-color);
+    /* background-color: var(--light-primary-color); */
+}
+
+.btn_delete {
+    border-color: var(--danger);
+    /* background-color: var(--danger); */
+}
+
+.btn_pagination {
+    margin-right: 10px;
+}
+
+.btn_pagination.inactive {
+    background-color: var(--dark-primary-color);
+    border-color: var(--dark-primary-color);
+    color: var(--light);
+}
+
+.pagination_control {
+    display: flex;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+.form_info .form_group {
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    width: 40%;
 }
 
 label {
     padding: 0.5em 0;
 }
 
-.form_info input:not('type=submit'), .form_info select {
+.form_search .form_group{
+    display: flex;
+    flex-direction: column;
+}
+
+.form_info input:not([type='submit']), .form_info select {
     display: block;
 }
 
@@ -78,9 +196,98 @@ label {
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-.form_search input[type='search'] {
-    width: 40%;
+.form_info input:focus,
+.form_info select:focus-visible,
+.form_info textarea:focus {
+    outline: transparent;
+    background-color: var(--light);
 }
-.form_search input, .form_search select {
-    margin-right: 20px;
+
+.form_search {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+
+
+.form_search input[type='search'] {
+    /* min-width: 300px; */
+    min-width: 149px;
+    width: calc(100% - 115px);
+    margin-right: -3px;
+    display: inline-block;
+    border-right: none;
+    border-radius: 3px 0 0 3px;
+}
+
+.form_search input[type='submit'] {
+    width: 115px;
+    display: inline-block;
+    margin-left: -2px;
+    border-radius: 0 3px 3px 0;
+    border-color: #000;
+
+}
+.form_search select {
+    min-width: 250px;
+
+}
+
+@media only screen and (min-width: 576px) {
+
+}
+@media only screen and (min-width: 768px) {
+    h1 {
+        font-size: 4rem;
+    }
+    
+    h2 {
+        font-size: 3rem;
+    }
+    
+    h3 {
+        font-size: 2rem;
+    }
+    .form_search {
+        flex-direction: row;
+        /* justify-content: space-between; */
+    }
+
+    .form_search input, .form_search select {
+        margin-right: 20px;
+    }
+    
+    .form_search input[type='search'] {
+        width: calc(100% - 135px);
+    }
+}
+@media only screen and (min-width: 1200px) {
+    h2 {
+        text-align: left;
+    }
+
+    .form_info .form_bloc {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .form_bloc .form_group {
+        width: 40%;
+        margin-left: 0;
+        
+    }
+
+    .form_info .form_group {
+        margin-bottom: 30px;
+    }
+
+    .form_info .form_group label {
+        width: 30%;
+    }
+
+    .form_info .form_group select, .form_info .form_group input {
+        width: 80%;
+    }
 }

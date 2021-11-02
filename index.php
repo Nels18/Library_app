@@ -2,14 +2,38 @@
     require_once 'read.php';
     require_once 'db_connection.php';
 
+    $nbBook = mysqli_fetch_assoc(mysqli_query($mysqli,
+    "SELECT COUNT(*) as total FROM book"
+    ));
+
+
+    @$page = $_GET['page'];
+    if (is_null($page)) {
+        $page = 1;
+    }
+    $nbBookPerPage = 5;
+    $nbPages = ceil($nbBook['total'] / $nbBookPerPage);
+    $offset = ($page - 1) * $nbBookPerPage;
+    $paginationRequest = " LIMIT " . $offset . ',' . $nbBookPerPage;
+    
+    function getPagination($nbBookPerPage, $page) {
+        for ($i=1; $i <= $nbBookPerPage; $i++) {
+            if ($page != $i) {
+                echo '<a href="?page=' . $i . '"><button class="btn_pagination">' . $i .' </button></a>';
+            } else {
+                echo '<span><button class="btn_pagination inactive">' . $i .' </button></span>';
+            }
+            
+        }
+    }
+
+        
 
     // Run request
-
-    if (isset($_GET['search_submit'])) {
+    if (isset($_GET['search_submit'])) {  // If user run a search
+        // Search request
         $searches = explode(' ',trim($_GET['search']));
         $publicationDate = $_GET['publication_date'];
-        var_dump($_GET);
-
 
         $searchResult = "SELECT b.id, b.title, a.firstname, a.lastname, c.name category, b.publication_date, b.summary  FROM book b
         INNER JOIN author a ON a.id = b.author_id
@@ -27,23 +51,24 @@
         if ('0' !== $publicationDate) {
             $searchResult .= " AND b.publication_date LIKE '$publicationDate%'";
         }
-        $searchResult .= " ORDER BY id;";
-        var_dump($searchResult);
+        $searchResult .= " ORDER BY id";
+        $searchResult .= $paginationRequest;
+        $searchResult .= ";";
         $searches = addslashes(str_replace('%', ' ', (implode('%',$searches))));
 
-    } else {
+    } else {  // If user don't run a search show all books
         $allBooks = "SELECT b.id, b.title, a.firstname, a.lastname, c.name category, b.publication_date, b.summary  FROM book b
         INNER JOIN author a ON a.id = b.author_id
         INNER JOIN category c ON c.id = b.category_id
-        ORDER BY id
+        ORDER BY id " . $paginationRequest . "
         ;";
     }
 
+    // Get all dates of publication
     $queryDates = "SELECT YEAR(publication_date) as pubDate FROM book GROUP BY pubDate ORDER BY pubDate;";
     $publicationDates = mysqli_query($mysqli, $queryDates);
-    // var_dump($result);
-?>
 
+?>
 <!DOCTYPE html>
 <html lang='fr'>
 <head>
@@ -58,21 +83,28 @@
     <header>
         <h1>Ma bibliothèque</h1>
     </header>
-    <main>
+    <main class="container">
+        <h2>Liste des livres</h2>
         <form action="index.php" method="get" class="form_search">
-            <label for="publication_date">Filtrer par année :</label>
-            <select name="publication_date" id="publication_date" required>
-                <option value="0">Sélectionner une année pour la recherche</option>
-                <?php
-                    while ($publicationDate = mysqli_fetch_assoc($publicationDates)) {
-                        $publicationDate = $publicationDate['pubDate'];
-                        echo '<option value="' . $publicationDate . '"' . '>' . $publicationDate . '</option>';
-                    }
-                ?>
-            </select>
-            <label for="search">Recherche : </label>
-            <input type="search" name="search" id="search">
-            <input type="submit" name="search_submit" value="Rechercher">
+            <div class="form_group">
+                <label for="search">Recherche : </label>
+                <div>
+                    <input type="search" name="search" id="search">
+                    <input type="submit" name="search_submit" value="Rechercher">
+                </div>
+            </div>
+            <div class="form_group">
+                <label for="publication_date">Filtrer par année :</label>
+                <select name="publication_date" id="publication_date" required>
+                    <option value="0">Sélectionner une année pour la recherche</option>
+                    <?php
+                        while ($publicationDate = mysqli_fetch_assoc($publicationDates)) {
+                            $publicationDate = $publicationDate['pubDate'];
+                            echo '<option value="' . $publicationDate . '"' . '>' . $publicationDate . '</option>';
+                        }
+                    ?>
+                </select>
+            </div>
         </form>
         <?php
 
@@ -86,31 +118,36 @@
                 </p>
             </div>';
             }
-            
-        ?>
-        <table class='book_table'>
-        <thead>
-            <tr>
-                <th>Titre</th>
-                <th>Auteur</th>
-                <th>Genre</th>
-                <th>Date de parution</th>
-                <th>Résumé</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-                if (isset($_GET['search_submit']) && 'Rechercher' == $_GET['search_submit']) {
-                    read($mysqli,$searchResult);
-                } else {
-                    read($mysqli,$allBooks);
-                }
             ?>
-        </tbody>
-    </table>
-    <a href="add_book.php"><button>Ajouter un livre</button></a>
+            <div class="pagination_control">
+                <?php
+                    getPagination($nbBookPerPage, $page);
+                ?>
+            </div>
+        <table class='book_table'>
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Genre</th>
+                    <th>Date de parution</th>
+                    <th>Résumé</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    if (isset($_GET['search_submit']) && 'Rechercher' == $_GET['search_submit']) {
+                        read($mysqli,$searchResult);
+                    } else {
+                        read($mysqli,$allBooks);
+                    }
+                ?>
+            </tbody>
+        </table>
+        <a href="form_book.php"><button class="btn_primary">Ajouter un livre</button></a>
+        <div class="pagination_control"><?php getPagination($nbBookPerPage, $page); ?></div>
     </main>
 </body>
 </html>
