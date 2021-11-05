@@ -4,11 +4,11 @@ require 'db_connection.php';
 
 if (isset($_POST['submit'])) {
     $id =  intval($_POST['book_id']);
-    $title = mysqli_real_escape_string($mysqli ,$_POST['title']);
+    $title = mysqli_real_escape_string($mysqli, $_POST['title']);
     $authorId = intval($_POST['author_id']);
     $categoryId = intval($_POST['category_id']);
-    $publication_date = $_POST['publication_date'];
-    $summary = mysqli_real_escape_string($mysqli ,$_POST['summary']);
+    $publication_date = mysqli_real_escape_string($mysqli, $_POST['publication_date']);
+    $summary = mysqli_real_escape_string($mysqli, $_POST['summary']);
 
     // Run request
     $querySelect = "SELECT * FROM book WHERE id = $id;";

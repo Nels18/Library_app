@@ -3,10 +3,10 @@ require 'db_connection.php';
 
 // If form is being submitted, get the values from $_POST array
 if (isset($_POST['submit'])) {
-    $authorId = $_POST['author_id'];
-    $categoryId = $_POST['category_id'];
+    $authorId = intval($_POST['author_id']);
+    $categoryId = intval($_POST['category_id']);
     $title = htmlspecialchars(mysqli_real_escape_string($mysqli, $_POST['title']));
-    $publication_date = $_POST['publication_date'];
+    $publication_date = htmlspecialchars(mysqli_real_escape_string($mysqli, $_POST['publication_date']));
     $summary = htmlspecialchars(mysqli_real_escape_string($mysqli, $_POST['summary']));
     
     // Run request
