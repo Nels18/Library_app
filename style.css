@@ -160,6 +160,7 @@ button, input[type='submit'] {
     background-color: var(--dark-primary-color);
     border-color: var(--dark-primary-color);
     color: var(--light);
+    cursor: default;
 }
 
 .pagination_control {

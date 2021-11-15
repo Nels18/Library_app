@@ -23,12 +23,19 @@ function read($mysqli, $query)
             <td>
                 <a href="form_book.php?id=' . $book["id"] . '">
                     <button class="btn_edit">' . $btnEdit . '</button>
+
                 </a>
             </td>
             <td>
                 <a href="delete.php?id=' . $book["id"] . '">
                     <button class="btn_delete">' . $btnDelete . '</button>
                 </a>
+            </td>
+            <td>
+                <form action="' . htmlspecialchars($_SERVER["PHP_SELF"]) . '" method="post">
+                    <input type="hidden" name="book_title" value="' . $book["title"] . '">
+                    <input type="submit" value="+">
+                </form>
             </td>
         </tr>';
 
